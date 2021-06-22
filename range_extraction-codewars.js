@@ -1,21 +1,25 @@
 function rangeExtraction(list) {
-  const maxVal = Math.max(...list);
-  let minVal = Math.min(...list);
   let counter = 0;
-  let rangeStr = "";
-  while (minVal <= maxVal) {
-    if (list.includes(minVal)) {
-      counter++;
-      if (counter >= 3) {
-        rangeStr.concat(minVal - counter + "-" + minVal);
+  const rangeVals = [];
+  for (let i = 0; i < list.length; i++) {
+    if (list[i] + 1 != list[i + 1]) {
+      if (counter === 0) {
+        rangeVals.push(list[i]);
+      }
+      if (counter === 1) {
+        rangeVals.push(list[i - 1]);
+        rangeVals.push(list[i]);
+        counter = 0;
+      }
+      if (counter > 1) {
+        rangeVals.push(list[i - counter] + "-" + list[i]);
+        counter = 0;
       }
     } else {
-      rangeStr.concat(minVal);
-      counter = 0;
+      counter++;
     }
-    minVal++;
   }
-  return rangeStr;
+  return rangeVals.join();
 }
 
 console.log(
